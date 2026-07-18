@@ -34,7 +34,7 @@ export default function RegisterPage() {
     setLoading(true);
 
     try {
-      // 1. Sign up directly with Supabase Auth
+      // Sign up directly with Supabase Auth
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
@@ -45,20 +45,6 @@ export default function RegisterPage() {
       }
 
       if (data?.user) {
-        // 2. Call our FastAPI backend /auth/register endpoint for server registration
-        const response = await fetch("http://localhost:8000/api/v1/auth/register", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, password }),
-        });
-
-        if (!response.ok) {
-          const errData = await response.json();
-          throw new Error(errData.detail || "FastAPI registration synchronization failed");
-        }
-
         setSuccessMsg(
           data.session 
             ? "Registration successful! Redirecting..." 

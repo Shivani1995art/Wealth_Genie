@@ -87,6 +87,15 @@ export default function DashboardPage() {
 
   const handleLogout = async () => {
     try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        await fetch("http://localhost:8000/api/v1/auth/logout", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${session.access_token}`,
+          },
+        }).catch((err) => console.warn("Backend logout notification failed:", err));
+      }
       await supabase.auth.signOut();
       router.push("/login");
     } catch (err) {

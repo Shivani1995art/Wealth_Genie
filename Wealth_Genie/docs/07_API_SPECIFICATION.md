@@ -42,67 +42,20 @@ All error responses share this shape:
 
 ---
 
-## Auth Endpoints
+## Authentication Endpoints
 
-### `POST /auth/register`
-
-Register a new user. Delegates to Supabase Auth.
-
-**Request**
-```json
-{
-  "email": "string",
-  "password": "string"
-}
-```
-
-**Response `201 Created`**
-```json
-{
-  "user_id": "uuid",
-  "email": "string",
-  "access_token": "string",
-  "token_type": "bearer"
-}
-```
-
-**Errors:** `400` if email already registered or password too weak.
-
----
-
-### `POST /auth/login`
-
-Login and receive a JWT.
-
-**Request**
-```json
-{
-  "email": "string",
-  "password": "string"
-}
-```
-
-**Response `200 OK`**
-```json
-{
-  "access_token": "string",
-  "token_type": "bearer",
-  "user_id": "uuid"
-}
-```
-
-**Errors:** `401` if credentials are invalid.
-
----
+> [!NOTE]
+> Registration and login are handled directly client-side via the Supabase Client SDK. The backend does not expose registration or login endpoints, but continues to validate Supabase-issued JWTs on all protected endpoints.
 
 ### `POST /auth/logout`
 
-Invalidate the current session. FastAPI holds no session state; this endpoint exists
-for API consistency and future token revocation support.
+A stateless logout acknowledgement route. Validates the JWT and returns success.
 
 **Request:** No body required.
 
 **Response `204 No Content`**
+
+**Errors:** `401` if token is invalid or expired.
 
 ---
 
@@ -315,8 +268,6 @@ responsible for maintaining and forwarding history across turns.
 
 | Method | Path | Auth | Async |
 |--------|------|------|-------|
-| POST | `/auth/register` | No | No |
-| POST | `/auth/login` | No | No |
 | POST | `/auth/logout` | Yes | No |
 | POST | `/documents/upload` | Yes | Yes — returns 202 |
 | GET | `/analysis/status/{job_id}` | Yes | No |

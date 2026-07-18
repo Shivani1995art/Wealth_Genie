@@ -25,16 +25,10 @@ User fills register form (Next.js)
               │
               └─► Returns { user, session: { access_token, refresh_token } }
                     │
-                    └─► Frontend stores session (Supabase client handles this)
-                          │
-                          └─► POST /api/v1/auth/register
-                                  (forwards user_id + email to FastAPI for any
-                                   server-side initialisation if needed)
+                    └─► Frontend stores session and redirects to dashboard
 ```
 
-For MVP, `POST /auth/register` is a thin pass-through. It validates that the Supabase
-registration succeeded and returns the same `access_token`. No custom user table
-is created.
+No FastAPI backend call is made during registration. Supabase manages user signups client-side.
 
 ---
 
@@ -130,11 +124,10 @@ User clicks Logout (Next.js)
         │
         └─► Supabase invalidates session client-side
               │
-              └─► POST /api/v1/auth/logout   (optional acknowledgement call)
-                    │
-                    └─► Returns 204 No Content
-                          (FastAPI holds no session state; this is a no-op for MVP)
+              └─► Frontend redirects to /login
 ```
+
+No FastAPI backend call is made during logout.
 
 ---
 
@@ -177,8 +170,8 @@ SUPABASE_SERVICE_ROLE_KEY=    # Used for server-side DB access — keep secret
 
 ## Protected vs. Public Endpoints
 
+All backend endpoints are protected and require a valid Supabase JWT Bearer token in the `Authorization` header.
+
 | Endpoint | Auth Required |
 |----------|--------------|
-| `POST /auth/register` | No |
-| `POST /auth/login` | No |
-| All other endpoints | Yes — JWT required |
+| All endpoints | Yes — JWT required |
