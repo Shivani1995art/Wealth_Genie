@@ -9,10 +9,6 @@ import os
 
 from app.config import settings
 from app.schemas import (
-    UserRegisterRequest,
-    UserRegisterResponse,
-    UserLoginRequest,
-    UserLoginResponse,
     TokenVerificationResponse,
     ErrorResponse,
     UploadResponse
@@ -69,77 +65,6 @@ async def general_exception_handler(request, exc: Exception):
 
 # ----------------- AUTH ROUTERS -----------------
 
-@app.post(
-    "/api/v1/auth/register",
-    response_model=UserRegisterResponse,
-    status_code=201,
-    responses={400: {"model": ErrorResponse}}
-)
-def register_user(request: UserRegisterRequest):
-    try:
-        response = supabase_client.auth.sign_up({
-            "email": request.email,
-            "password": request.password
-        })
-        
-        if not response.user:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="User registration failed: empty user returned"
-            )
-            
-        access_token = ""
-        if response.session:
-            access_token = response.session.access_token
-            
-        return UserRegisterResponse(
-            user_id=UUID(response.user.id),
-            email=response.user.email,
-            access_token=access_token
-        )
-    except Exception as e:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=str(e)
-        )
-
-@app.post(
-    "/api/v1/auth/login",
-    response_model=UserLoginResponse,
-    responses={401: {"model": ErrorResponse}}
-)
-def login_user(request: UserLoginRequest):
-    try:
-        response = supabase_client.auth.sign_in_with_password({
-            "email": request.email,
-            "password": request.password
-        })
-        
-        if not response.session or not response.user:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Invalid credentials"
-            )
-            
-        return UserLoginResponse(
-            access_token=response.session.access_token,
-            user_id=UUID(response.user.id)
-        )
-    except Exception as e:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid credentials"
-        )
-
-@app.post(
-    "/api/v1/auth/logout",
-    status_code=204,
-    responses={401: {"model": ErrorResponse}}
-)
-def logout_user(user_id: UUID = Depends(get_current_user_id)):
-    # For MVP, FastAPI logout is a stateless no-op
-    return
-
 @app.get(
     "/api/v1/auth/verify-token",
     response_model=TokenVerificationResponse,
@@ -155,17 +80,14 @@ def verify_token(user_id: UUID = Depends(get_current_user_id), authorization: st
         role=payload.get("role", "")
     )
 
-# Startup event to ensure documents storage bucket exists
-@app.on_event("startup")
-async def startup_event():
-    try:
-        supabase_client.storage.get_bucket("documents")
-    except Exception:
-        try:
-            # Create bucket as private
-            supabase_client.storage.create_bucket("documents", {"public": False})
-        except Exception as e:
-            print(f"Warning: Could not create Supabase Storage bucket 'documents': {str(e)}")
+@app.post(
+    "/api/v1/auth/logout",
+    status_code=204,
+    responses={401: {"model": ErrorResponse}}
+)
+def logout_user(user_id: UUID = Depends(get_current_user_id)):
+    # For MVP, FastAPI logout is a stateless no-op
+    return
 
 # Document upload endpoint
 @app.post(

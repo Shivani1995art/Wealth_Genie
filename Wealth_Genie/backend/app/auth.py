@@ -8,15 +8,38 @@ from typing import Dict, Any
 # We use auto_error=False or standard HTTPBearer to handle auth
 security = HTTPBearer()
 
+# Construct JWKS URL from SUPABASE_URL
+jwks_url = f"{settings.SUPABASE_URL.rstrip('/')}/auth/v1/.well-known/jwks.json"
+jwks_client = jwt.PyJWKClient(jwks_url)
+
 def verify_jwt(token: str) -> Dict[str, Any]:
     try:
-        # Decode the Supabase JWT using HS256 signature and SUPABASE_JWT_SECRET
-        payload = jwt.decode(
-            token,
-            settings.SUPABASE_JWT_SECRET,
-            algorithms=["HS256"],
-            audience="authenticated"
-        )
+        # 1. Retrieve the token header to check the algorithm
+        unverified_header = jwt.get_unverified_header(token)
+        alg = unverified_header.get("alg")
+
+        if alg == "HS256":
+            # Decode using symmetric secret
+            payload = jwt.decode(
+                token,
+                settings.SUPABASE_JWT_SECRET,
+                algorithms=["HS256"],
+                audience="authenticated"
+            )
+        elif alg in ("RS256", "ES256"):
+            # Decode using JWKS public keys
+            signing_key = jwks_client.get_signing_key_from_jwt(token)
+            payload = jwt.decode(
+                token,
+                signing_key.key,
+                algorithms=["RS256", "ES256"],
+                audience="authenticated"
+            )
+        else:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail=f"Unsupported token algorithm: {alg}"
+            )
         
         # Verify custom Supabase role claim
         if payload.get("role") != "authenticated":
