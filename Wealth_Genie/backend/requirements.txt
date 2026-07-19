@@ -19,7 +19,8 @@ numpy>=1.26.0
 pandas>=2.2.0            # CSV/Excel parsing
 openpyxl>=3.1.0           # .xlsx engine for pandas
 Pillow>=10.0.0
-anthropic>=0.34.0         # Claude LLM provider (app/services/llm/claude.py only)
+openai>=1.0.0             # OpenRouter provider (OpenAI-compatible client) — app/services/llm/openrouter.py
+anthropic>=0.34.0         # Legacy Claude provider (LLM_PROVIDER=claude) — app/services/llm/claude.py
 
 # NOTE: pytesseract requires the `tesseract-ocr` system binary. This is not
 # installable via pip. On Debian/Ubuntu hosts: `apt-get install tesseract-ocr`.

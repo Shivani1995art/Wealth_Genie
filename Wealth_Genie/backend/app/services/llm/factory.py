@@ -12,8 +12,15 @@ from app.config import settings
 from app.services.llm.base import LLMProvider
 
 
+_SUPPORTED_PROVIDERS = ("openrouter", "claude")
+
+
 def get_llm_provider() -> LLMProvider:
     provider_name = settings.LLM_PROVIDER.lower()
+
+    if provider_name == "openrouter":
+        from app.services.llm.openrouter import OpenRouterLLMProvider
+        return OpenRouterLLMProvider()
 
     if provider_name == "claude":
         from app.services.llm.claude import ClaudeLLMProvider
@@ -21,5 +28,6 @@ def get_llm_provider() -> LLMProvider:
 
     raise ValueError(
         f"Unknown LLM_PROVIDER '{provider_name}'. "
-        f"Supported: claude. Add a new provider module to enable others."
+        f"Supported: {', '.join(_SUPPORTED_PROVIDERS)}. "
+        f"Add a new provider module to enable others."
     )

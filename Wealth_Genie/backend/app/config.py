@@ -11,9 +11,16 @@ class Settings(BaseSettings):
 
     # --- Milestone 3: LLM provider configuration ---
     # Provider-independent: business logic never imports a vendor SDK directly.
-    LLM_PROVIDER: str = "claude"
+    # Switching providers is a pure .env change (LLM_PROVIDER=openrouter|claude);
+    # no Python code needs to change. See app/services/llm/factory.py.
+    LLM_PROVIDER: str = "openrouter"
+    LLM_MODEL: str = "google/gemini-2.5-flash"
+
+    # OpenRouter (default provider) — https://openrouter.ai
+    OPENROUTER_API_KEY: Optional[str] = None
+
+    # Claude/Anthropic — retained as an alternate provider (LLM_PROVIDER=claude)
     ANTHROPIC_API_KEY: Optional[str] = None
-    LLM_MODEL: str = "claude-sonnet-4-6"
 
     # Extraction tuning
     OCR_TEXT_THRESHOLD_CHARS: int = 50  # below this, a PDF is treated as scanned
