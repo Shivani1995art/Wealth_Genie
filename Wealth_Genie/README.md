@@ -20,3 +20,19 @@ Single source of truth for the project.
 | 12_ROADMAP.md | Phase plan |
 | 13_ASYNC_PROCESSING.md | BackgroundTasks pipeline and status polling |
 | 14_AUTH_FLOW.md | Supabase Auth → JWT → FastAPI validation |
+
+
+# Evaluation Dataset
+
+This folder contains evaluation datasets for the Universal Financial Extractor.
+
+Each document type contains:
+
+- sample document
+- expected extracted JSON
+- metadata
+
+These datasets are used for regression testing and prompt evaluation.
+
+No production user documents should be stored here.
+Only synthetic or anonymized documents.

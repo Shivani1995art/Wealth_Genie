@@ -1,0 +1,9 @@
+{
+    "id": "bank_statement_sample_001",
+    "document_type": "bank_statement",
+    "bank": "HDFC",
+    "language": "en",
+    "country": "IN",
+    "synthetic": true,
+    "description": "Synthetic HDFC bank statement used for regression testing."
+}

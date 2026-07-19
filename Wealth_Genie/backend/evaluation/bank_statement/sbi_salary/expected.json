@@ -1,0 +1,163 @@
+{
+    "user": {
+        "id": null,
+        "name": "SHIVANI CHANDEL",
+        "email": null
+    },
+    "loans": [],
+    "summary": {
+        "total_debt": "0",
+        "total_savings": "0",
+        "net_worth_estimate": "0",
+        "savings_rate_percent": "0",
+        "total_monthly_income": "145000.0",
+        "total_monthly_expenses": "63757.0"
+    },
+    "accounts": [
+        {
+            "currency": "INR",
+            "bank_name": "HDFC Bank Ltd.",
+            "account_id": "5010 1234 5678 90",
+            "account_type": "savings",
+            "closing_balance": "231058.65",
+            "opening_balance": "125430.5",
+            "statement_period_end": "2026-07-18",
+            "statement_period_start": "2028-06-19"
+        }
+    ],
+    "analysis": {
+        "debt_agent": {},
+        "budget_agent": {},
+        "savings_agent": {}
+    },
+    "credit_cards": [],
+    "transactions": [
+        {
+            "date": "2025-06-20",
+            "type": "credit",
+            "amount": "72500.0",
+            "category": "salary",
+            "account_id": "5010 1234 5678 90",
+            "description": "SALARY CREDIT - ACME SOLUTIONS",
+            "transaction_id": null
+        },
+        {
+            "date": "2025-06-20",
+            "type": "debit",
+            "amount": "2458.0",
+            "category": "shopping",
+            "account_id": "5010 1234 5678 90",
+            "description": "UPI/1234567890t2/AMAZONPAYINOIDA/UPL",
+            "transaction_id": null
+        },
+        {
+            "date": "2025-06-21",
+            "type": "debit",
+            "amount": "549.0",
+            "category": "food",
+            "account_id": "5010 1234 5678 90",
+            "description": "UPY9B7654321098/SWIGGY/BANGALORE/UP",
+            "transaction_id": null
+        },
+        {
+            "date": "2025-06-24",
+            "type": "debit",
+            "amount": "18000.0",
+            "category": "credit card payment",
+            "account_id": "5010 1234 5678 90",
+            "description": "CREDIT CARD PAYMENT - HDFC BANK",
+            "transaction_id": null
+        },
+        {
+            "date": "2025-06-24",
+            "type": "debit",
+            "amount": "649.0",
+            "category": "subscriptions",
+            "account_id": "5010 1234 5678 90",
+            "description": "NETFLIX.COM MUMBAI IND",
+            "transaction_id": null
+        },
+        {
+            "date": "2025-06-25",
+            "type": "debit",
+            "amount": "25000.0",
+            "category": "rent",
+            "account_id": "5010 1234 5678 90",
+            "description": "RENT PAYMENT-204, ASTER RESIDENCY",
+            "transaction_id": null
+        },
+        {
+            "date": "2025-06-27",
+            "type": "debit",
+            "amount": "1250.0",
+            "category": "transfer",
+            "account_id": "5010 1234 5678 90",
+            "description": "PHONEPE/782391xxxx/PAYMENTTOXYZ",
+            "transaction_id": null
+        },
+        {
+            "date": "2025-06-28",
+            "type": "credit",
+            "amount": "312.0",
+            "category": "interest",
+            "account_id": "5010 1234 5678 90",
+            "description": "INTEREST CREDIT",
+            "transaction_id": null
+        },
+        {
+            "date": "2025-07-01",
+            "type": "debit",
+            "amount": "1876.0",
+            "category": "bills",
+            "account_id": "5010 1234 5678 90",
+            "description": "ELECTRICITY BILL PAYMENT",
+            "transaction_id": null
+        },
+        {
+            "date": "2025-07-05",
+            "type": "debit",
+            "amount": "3299.0",
+            "category": "shopping",
+            "account_id": "5010 1234 5678 90",
+            "description": "UPI/11223344S566/FLIPKART/NOIDA/UPI",
+            "transaction_id": null
+        },
+        {
+            "date": "2025-07-07",
+            "type": "credit",
+            "amount": "72500.0",
+            "category": "salary",
+            "account_id": "5010 1234 5678 90",
+            "description": "SALARY CREDIT - ACME SOLUTIONS",
+            "transaction_id": null
+        },
+        {
+            "date": "2025-07-10",
+            "type": "debit",
+            "amount": "10000.0",
+            "category": "investments",
+            "account_id": "5010 1234 5678 90",
+            "description": "MUTUAL FUND SIP- HDFC MF",
+            "transaction_id": null
+        },
+        {
+            "date": "2025-07-12",
+            "type": "debit",
+            "amount": "676.0",
+            "category": "food",
+            "account_id": "5010 1234 5678 90",
+            "description": "ZOMATO PAYMENT",
+            "transaction_id": null
+        },
+        {
+            "date": "2025-07-15",
+            "type": "credit",
+            "amount": "1273.15",
+            "category": "refund",
+            "account_id": "5010 1234 5678 90",
+            "description": "HDC BANK CREDIT CARD REFUND",
+            "transaction_id": null
+        }
+    ],
+    "recommendations": []
+}
