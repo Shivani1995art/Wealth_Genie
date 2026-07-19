@@ -17,7 +17,7 @@ from __future__ import annotations
 from decimal import Decimal
 from enum import Enum
 from typing import List, Optional
-from datetime import date
+import datetime
 
 from pydantic import BaseModel, Field, ConfigDict
 
@@ -69,15 +69,15 @@ class Account(BaseModel):
     currency: Optional[str] = None
     opening_balance: Optional[Decimal] = None
     closing_balance: Optional[Decimal] = None
-    statement_period_start: Optional[date] = None
-    statement_period_end: Optional[date] = None
+    statement_period_start: Optional[datetime.date] = None
+    statement_period_end: Optional[datetime.date] = None
 
 
 class Transaction(BaseModel):
     model_config = ConfigDict(extra="ignore")
     transaction_id: Optional[str] = None
     account_id: Optional[str] = None
-    date: Optional[date] = None
+    date: Optional[datetime.date] = None
     description: Optional[str] = None
     amount: Optional[Decimal] = None
     type: Optional[TransactionType] = None
@@ -103,7 +103,7 @@ class CreditCard(BaseModel):
     credit_limit: Optional[Decimal] = None
     outstanding_balance: Optional[Decimal] = None
     minimum_due: Optional[Decimal] = None
-    due_date: Optional[date] = None
+    due_date: Optional[datetime.date] = None
     interest_rate: Optional[Decimal] = None
 
 
